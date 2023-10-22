@@ -20,15 +20,22 @@ import tensorflow as tf
 import keras
 import keras.backend as K
 import keras.layers as KL
-import keras.engine as KE
-import keras.models as KM
+from tensorflow.python.eager import context
+import tensorflow.keras.models as KM
 
 from mrcnn import utils
 
-# Requires TensorFlow 1.3+ and Keras 2.0.8+.
+# Requires TensorFlow 2.0+
 from distutils.version import LooseVersion
-assert LooseVersion(tf.__version__) >= LooseVersion("1.3")
+assert LooseVersion(tf.__version__) >= LooseVersion("2.0")
 assert LooseVersion(keras.__version__) >= LooseVersion('2.0.8')
+
+tf.compat.v1.disable_eager_execution()
+
+# # Requires TensorFlow 1.3+ and Keras 2.0.8+.
+# from distutils.version import LooseVersion
+# assert LooseVersion(tf.__version__) >= LooseVersion("1.3")
+
 
 
 ############################################################
@@ -252,7 +259,7 @@ def clip_boxes_graph(boxes, window):
     return clipped
 
 
-class ProposalLayer(KE.Layer):
+class ProposalLayer(KL.Layer):
     """Receives anchor scores and selects a subset to pass as proposals
     to the second stage. Filtering is done based on anchor scores and
     non-max suppression to remove overlaps. It also applies bounding
