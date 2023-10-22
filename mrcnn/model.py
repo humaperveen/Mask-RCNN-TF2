@@ -18,8 +18,8 @@ import multiprocessing
 import numpy as np
 import tensorflow as tf
 import keras
-import keras.backend as K
-import keras.layers as KL
+import tf.keras.backend as K
+import tf.keras.layers as KL
 from tensorflow.python.eager import context
 import tensorflow.keras.models as KM
 
